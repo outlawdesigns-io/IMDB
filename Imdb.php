@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/ApiKey.php';
+
 class Imdb{
     const BASEURL = 'http://www.omdbapi.com/?';
     const TITLEKEY = 't=';
