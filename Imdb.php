@@ -26,7 +26,7 @@ class Imdb{
         $obj = new self();
         $result = $obj->_apiCall($url);
         if(isset($result->Error)){
-          return false;
+          throw new \Exception($result->Error);
         }
         return $result;
     }
