@@ -6,9 +6,16 @@ class Imdb{
     const BASEURL = 'http://www.omdbapi.com/?';
     const TITLEKEY = 't=';
     const YEARKEY = 'y=';
+    const API_ENV_VAR = 'IMDB_API_KEY';
 
     public function __construct(){
 
+    }
+    protected static function _loadApiKey(){
+      if(!$apiKey = getenv(self::API_ENV_VAR)){
+        throw new Exception('Unable to access environment variable: ' . self::API_ENV_VAR);
+      }
+      return $apiKey;
     }
     protected function _apiCall($url){
         $ch = curl_init();
@@ -19,7 +26,7 @@ class Imdb{
         return json_decode($output);
     }
     public static function search($title,$year = null){
-        $url = self::BASEURL . IMDBKEY . '&' . self::TITLEKEY . urlencode($title);
+        $url = self::BASEURL . self::_loadApiKey() . '&' . self::TITLEKEY . urlencode($title);
         if(!is_null($year)){
             $url .= self::YEARKEY . $year;
         }
